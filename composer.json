@@ -1,0 +1,52 @@
+{
+    "name": "orionphp/open-meteo",
+    "description": "Typed PHP 8.4 client for the Open-Meteo API",
+    "authors": [
+        {
+            "name": "Dennis Leisdorff",
+            "email": "dle79@proton.me"
+        }
+    ],
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+
+    "require": {
+        "php": "^8.4",
+        "guzzlehttp/guzzle": "^7.1",
+        "psr/log": "^3.0"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^13.0",
+        "phpstan/phpstan": "2.2.x-dev",
+        "symfony/var-dumper": "8.1.x-dev",
+        "friendsofphp/php-cs-fixer": "dev-master"
+    },
+
+    "scripts": {
+        "cs": "php-cs-fixer fix",
+        "cs-check": "php-cs-fixer fix --dry-run --diff",
+
+        "stan": "phpstan analyse",
+
+        "test": "phpunit",
+
+        "check": [
+            "@cs-check",
+            "@stan",
+            "@test"
+        ]
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Orionphp\\OpenMeteo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Orionphp\\OpenMeteo\\Tests\\": "tests/"
+        }
+    }
+}

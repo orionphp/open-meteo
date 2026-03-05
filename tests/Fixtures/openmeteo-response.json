@@ -1,0 +1,23 @@
+{
+  "current_units": {
+    "temperature_2m": "°C"
+  },
+  "current": {
+    "time": "2025-01-01T00:00",
+    "temperature_2m": 10
+  },
+  "hourly_units": {
+    "temperature_2m": "°C"
+  },
+  "hourly": {
+    "time": ["2025-01-01T00:00"],
+    "temperature_2m_gfs": [10]
+  },
+  "daily_units": {
+    "temperature_2m_max": "°C"
+  },
+  "daily": {
+    "time": ["2025-01-01"],
+    "temperature_2m_max_gfs": [12]
+  }
+}
