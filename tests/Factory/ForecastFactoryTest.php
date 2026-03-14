@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Tests\Factory;
 
+use Orionphp\OpenMeteo\Enum\Locale;
+use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Factory\ForecastFactory;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
 use Orionphp\OpenMeteo\Response\Forecast;
-use Orionphp\OpenMeteo\Enum\Locale;
-use Orionphp\OpenMeteo\Enum\WeatherModel;
 use PHPUnit\Framework\TestCase;
 
 final class ForecastFactoryTest extends TestCase
@@ -25,6 +25,15 @@ final class ForecastFactoryTest extends TestCase
                 'time' => '2025-01-01T00:00',
                 'temperature_2m' => 10,
             ],
+
+            'minutely_15_units' => [
+                'temperature_2m' => '°C',
+            ],
+            'minutely_15' => [
+                'time' => ['2025-01-01T00:00'],
+                'temperature_2m_gfs' => [10],
+            ],
+
             'hourly_units' => [
                 'temperature_2m' => '°C',
             ],
@@ -32,6 +41,7 @@ final class ForecastFactoryTest extends TestCase
                 'time' => ['2025-01-01T00:00'],
                 'temperature_2m_gfs' => [10],
             ],
+
             'daily_units' => [
                 'temperature_2m_max' => '°C',
             ],
@@ -46,10 +56,12 @@ final class ForecastFactoryTest extends TestCase
         $this->assertInstanceOf(Forecast::class, $forecast);
 
         $this->assertTrue($forecast->hasCurrent());
+        $this->assertTrue($forecast->hasMinutely15());
         $this->assertTrue($forecast->hasHourly());
         $this->assertTrue($forecast->hasDaily());
 
         $this->assertNotNull($forecast->current);
+        $this->assertNotNull($forecast->minutely15);
         $this->assertNotNull($forecast->hourly);
         $this->assertNotNull($forecast->daily);
     }
@@ -61,10 +73,12 @@ final class ForecastFactoryTest extends TestCase
         $forecast = ForecastFactory::fromApiResponse([], $request);
 
         $this->assertFalse($forecast->hasCurrent());
+        $this->assertFalse($forecast->hasMinutely15());
         $this->assertFalse($forecast->hasHourly());
         $this->assertFalse($forecast->hasDaily());
 
         $this->assertNull($forecast->current);
+        $this->assertNull($forecast->minutely15);
         $this->assertNull($forecast->hourly);
         $this->assertNull($forecast->daily);
     }
@@ -75,6 +89,7 @@ final class ForecastFactoryTest extends TestCase
 
         $data = [
             'current' => 'invalid',
+            'minutely_15' => 'invalid',
             'hourly' => 'invalid',
             'daily' => 'invalid',
         ];
@@ -82,6 +97,7 @@ final class ForecastFactoryTest extends TestCase
         $forecast = ForecastFactory::fromApiResponse($data, $request);
 
         $this->assertFalse($forecast->hasCurrent());
+        $this->assertFalse($forecast->hasMinutely15());
         $this->assertFalse($forecast->hasHourly());
         $this->assertFalse($forecast->hasDaily());
     }

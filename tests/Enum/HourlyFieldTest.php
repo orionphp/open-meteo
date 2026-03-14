@@ -12,30 +12,54 @@ final class HourlyFieldTest extends TestCase
 {
     public function testItHasExpectedNumberOfCases(): void
     {
-        $this->assertCount(18, HourlyField::cases());
+        $this->assertCount(31, HourlyField::cases());
     }
 
     public function testValuesReturnsAllBackedValuesInOrder(): void
     {
         $expected = [
             'weathercode',
+
             'temperature_2m',
             'apparent_temperature',
+
             'soil_temperature_0cm',
+            'soil_temperature_6cm',
+            'soil_temperature_18cm',
+            'soil_temperature_54cm',
+
             'cloud_cover',
             'relative_humidity_2m',
             'visibility',
+
+            'pressure_msl',
+            'surface_pressure',
+
             'wind_speed_10m',
             'wind_gusts_10m',
             'wind_direction_10m',
+
             'precipitation',
             'precipitation_probability',
             'rain',
+            'showers',
             'snowfall',
             'snow_depth',
+
             'uv_index',
+
             'dew_point_2m',
-            'pressure_msl',
+
+            'shortwave_radiation',
+            'direct_radiation',
+            'diffuse_radiation',
+            'direct_normal_irradiance',
+
+            'evapotranspiration',
+            'et0_fao_evapotranspiration',
+            'vapour_pressure_deficit',
+
+            'cape',
         ];
 
         $this->assertSame($expected, HourlyField::values());
@@ -45,23 +69,47 @@ final class HourlyFieldTest extends TestCase
     {
         $expected = [
             'WEATHER_CODE',
+
             'TEMPERATURE_2M',
             'APPARENT_TEMPERATURE',
+
             'SOIL_TEMPERATURE_0CM',
+            'SOIL_TEMPERATURE_6CM',
+            'SOIL_TEMPERATURE_18CM',
+            'SOIL_TEMPERATURE_54CM',
+
             'CLOUD_COVER',
             'RELATIVE_HUMIDITY_2M',
             'VISIBILITY',
+
+            'PRESSURE_MSL',
+            'SURFACE_PRESSURE',
+
             'WIND_SPEED_10M',
             'WIND_GUSTS_10M',
             'WIND_DIRECTION_10M',
+
             'PRECIPITATION',
             'PRECIPITATION_PROBABILITY',
             'RAIN',
+            'SHOWERS',
             'SNOWFALL',
             'SNOW_DEPTH',
+
             'UV_INDEX',
+
             'DEW_POINT_2M',
-            'PRESSURE_MSL',
+
+            'SHORTWAVE_RADIATION',
+            'DIRECT_RADIATION',
+            'DIFFUSE_RADIATION',
+            'DIRECT_NORMAL_IRRADIANCE',
+
+            'EVAPOTRANSPIRATION',
+            'ET0_FAO_EVAPOTRANSPIRATION',
+            'VAPOUR_PRESSURE_DEFICIT',
+
+            'CAPE',
         ];
 
         $this->assertSame($expected, HourlyField::names());

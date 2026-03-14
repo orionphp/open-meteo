@@ -11,7 +11,7 @@ final class DailyFieldTest extends TestCase
 {
     public function testItHasExpectedNumberOfCases(): void
     {
-        $this->assertCount(17, DailyField::cases());
+        $this->assertCount(20, DailyField::cases());
     }
 
     public function testValuesReturnsAllBackedValuesInOrder(): void
@@ -25,7 +25,9 @@ final class DailyFieldTest extends TestCase
             'precipitation_sum',
             'precipitation_probability_max',
             'rain_sum',
+            'showers_sum',
             'snowfall_sum',
+            'snow_depth_max',
             'wind_speed_10m_max',
             'wind_gusts_10m_max',
             'wind_direction_10m_dominant',
@@ -34,6 +36,7 @@ final class DailyFieldTest extends TestCase
             'sunshine_duration',
             'uv_index_max',
             'shortwave_radiation_sum',
+            'et0_fao_evapotranspiration',
         ];
 
         $this->assertSame($expected, DailyField::values());
@@ -50,7 +53,9 @@ final class DailyFieldTest extends TestCase
             'PRECIPITATION_SUM',
             'PRECIPITATION_PROBABILITY_MAX',
             'RAIN_SUM',
+            'SHOWERS_SUM',
             'SNOWFALL_SUM',
+            'SNOW_DEPTH_MAX',
             'WIND_SPEED_10M_MAX',
             'WIND_GUSTS_10M_MAX',
             'WIND_DIRECTION_10M_DOMINANT',
@@ -59,6 +64,7 @@ final class DailyFieldTest extends TestCase
             'SUNSHINE_DURATION',
             'UV_INDEX_MAX',
             'SHORTWAVE_RADIATION_SUM',
+            'ET0_FAO_EVAPOTRANSPIRATION',
         ];
 
         $this->assertSame($expected, DailyField::names());
