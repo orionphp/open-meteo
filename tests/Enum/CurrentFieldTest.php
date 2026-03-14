@@ -12,7 +12,7 @@ final class CurrentFieldTest extends TestCase
 {
     public function testItHasExpectedNumberOfCases(): void
     {
-        $this->assertCount(17, CurrentField::cases());
+        $this->assertCount(20, CurrentField::cases());
     }
 
     public function testValuesReturnsAllBackedValuesInOrder(): void
@@ -24,12 +24,15 @@ final class CurrentFieldTest extends TestCase
             'cloud_cover',
             'relative_humidity_2m',
             'visibility',
+            'pressure_msl',
+            'surface_pressure',
             'wind_speed_10m',
             'wind_gusts_10m',
             'wind_direction_10m',
             'precipitation',
             'precipitation_probability',
             'rain',
+            'showers',
             'snowfall',
             'snow_depth',
             'uv_index',
@@ -49,12 +52,15 @@ final class CurrentFieldTest extends TestCase
             'CLOUD_COVER',
             'RELATIVE_HUMIDITY_2M',
             'VISIBILITY',
+            'PRESSURE_MSL',
+            'SURFACE_PRESSURE',
             'WIND_SPEED_10M',
             'WIND_GUSTS_10M',
             'WIND_DIRECTION_10M',
             'PRECIPITATION',
             'PRECIPITATION_PROBABILITY',
             'RAIN',
+            'SHOWERS',
             'SNOWFALL',
             'SNOW_DEPTH',
             'UV_INDEX',

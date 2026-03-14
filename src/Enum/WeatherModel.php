@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Enum;
 
-use Orionphp\OpenMeteo\Exception\InvalidWeatherModelException;
-
 use function array_map;
-use function array_unique;
+
 use function implode;
 use function in_array;
+
+use Orionphp\OpenMeteo\Exception\InvalidWeatherModelException;
+
 use function sprintf;
 use function trim;
 
@@ -129,7 +130,7 @@ enum WeatherModel: string
     public static function toQuery(array $models): string
     {
         return implode(',', array_map(
-            static fn(self $model) => $model->value,
+            static fn (self $model) => $model->value,
             $models
         ));
     }

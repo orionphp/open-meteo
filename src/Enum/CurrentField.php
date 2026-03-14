@@ -17,12 +17,15 @@ enum CurrentField: string
     case CLOUD_COVER = 'cloud_cover';
     case RELATIVE_HUMIDITY_2M = 'relative_humidity_2m';
     case VISIBILITY = 'visibility';
+    case PRESSURE_MSL = 'pressure_msl';
+    case SURFACE_PRESSURE = 'surface_pressure';
     case WIND_SPEED_10M = 'wind_speed_10m';
     case WIND_GUSTS_10M = 'wind_gusts_10m';
     case WIND_DIRECTION_10M = 'wind_direction_10m';
     case PRECIPITATION = 'precipitation';
     case PRECIPITATION_PROBABILITY = 'precipitation_probability';
     case RAIN = 'rain';
+    case SHOWERS = 'showers';
     case SNOWFALL = 'snowfall';
     case SNOW_DEPTH = 'snow_depth';
     case UV_INDEX = 'uv_index';

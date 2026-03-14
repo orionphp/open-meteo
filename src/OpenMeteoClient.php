@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-
+use function http_build_query;
 use function is_array;
 
 use JsonException;
@@ -15,74 +13,103 @@ use Orionphp\OpenMeteo\Factory\ForecastFactory;
 use Orionphp\OpenMeteo\Http\ForecastQueryBuilder;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
 use Orionphp\OpenMeteo\Response\Forecast;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 use function sprintf;
-
-use Throwable;
 
 final class OpenMeteoClient
 {
     private const string BASE_API_URL = 'https://api.open-meteo.com/v1/';
-    private const int DEFAULT_TIMEOUT = 10;
 
-    private ClientInterface $client;
+    private readonly ClientInterface $httpClient;
+    private readonly RequestFactoryInterface $requestFactory;
+    private readonly LoggerInterface $logger;
 
+    /**
+     * @param ClientInterface|null $httpClient
+     * @param RequestFactoryInterface|null $requestFactory
+     * @param LoggerInterface|null $logger
+     */
     public function __construct(
-        private readonly LoggerInterface $logger,
-        ?ClientInterface                 $client = null
+        ?ClientInterface         $httpClient = null,
+        ?RequestFactoryInterface $requestFactory = null,
+        ?LoggerInterface         $logger = null
     ) {
-        $this->client = $client ?? new Client([
-            'base_uri' => self::BASE_API_URL,
-            'timeout' => self::DEFAULT_TIMEOUT,
-        ]);
+
+        $this->httpClient = $httpClient
+            ?? throw new OpenMeteoException(
+                'No PSR-18 HTTP client provided. Install one (e.g. guzzlehttp/guzzle).'
+            );
+
+        $this->requestFactory = $requestFactory
+            ?? throw new OpenMeteoException(
+                'No PSR-17 request factory provided. Install one (e.g. nyholm/psr7).'
+            );
+
+        $this->logger = $logger ?? new NullLogger();
     }
 
+    /**
+     * @param ForecastRequest $request
+     * @return Forecast
+     */
     public function forecast(ForecastRequest $request): Forecast
     {
         $query = ForecastQueryBuilder::build($request);
 
-        $this->logger->info('OpenMeteo forecast request', [
-            'query' => $query,
-        ]);
-
-        $response = $this->sendRequest($query);
+        $response = $this->sendRequest('forecast', $query);
 
         $data = $this->decodeJson($response);
+
         return ForecastFactory::fromApiResponse($data, $request);
     }
 
     /**
-     * @param array<string, string|float> $query
+     * @param string $endpoint
+     * @param array<string, scalar|string[]> $query
+     * @return ResponseInterface
      */
-    private function sendRequest(array $query, string $endpoint = 'forecast'): ResponseInterface
+    private function sendRequest(string $endpoint, array $query): ResponseInterface
     {
+        $url = $this->buildUrl($endpoint, $query);
+
+        $this->logger->info('OpenMeteo request', [
+            'url' => $url,
+        ]);
+
+        $request = $this->requestFactory->createRequest('GET', $url);
+
         try {
-            $response = $this->client->request('GET', $endpoint, [
-                'query' => $query,
-            ]);
-        } catch (Throwable $e) {
-            $this->logger->error('OpenMeteo HTTP request failed', [
+            $response = $this->httpClient->sendRequest($request);
+        } catch (ClientExceptionInterface $e) {
+            $this->logger->error('OpenMeteo HTTP client error', [
                 'exception' => $e,
+                'url' => $url,
             ]);
 
             throw new OpenMeteoException(
-                'Open-Meteo HTTP request failed.',
+                sprintf('Open-Meteo request failed for "%s".', $url),
                 0,
                 $e
             );
         }
 
-        if ($response->getStatusCode() !== 200) {
-            $this->logger->error('OpenMeteo returned non-200 status code', [
+        if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
+            $this->logger->error('OpenMeteo returned invalid status code', [
                 'status' => $response->getStatusCode(),
+                'url' => $url,
             ]);
 
             throw new OpenMeteoException(
                 sprintf(
-                    'Open-Meteo returned status code %d.',
-                    $response->getStatusCode()
+                    'Open-Meteo returned status code %d for "%s".',
+                    $response->getStatusCode(),
+                    $url
                 )
             );
         }
@@ -91,11 +118,30 @@ final class OpenMeteoClient
     }
 
     /**
+     * @param string $endpoint
+     * @param array<string, scalar|string[]> $query
+     * @return string
+     */
+    private function buildUrl(string $endpoint, array $query): string
+    {
+        return self::BASE_API_URL
+            . $endpoint
+            . '?'
+            . http_build_query(
+                $query,
+                '',
+                '&',
+                PHP_QUERY_RFC3986
+            );
+    }
+
+    /**
+     * @param ResponseInterface $response
      * @return array<string, mixed>
      */
     private function decodeJson(ResponseInterface $response): array
     {
-        $body = (string)$response->getBody();
+        $body = $response->getBody()->getContents();
 
         try {
             $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
@@ -120,5 +166,19 @@ final class OpenMeteoClient
 
         /** @var array<string, mixed> $data */
         return $data;
+    }
+
+    /**
+     * @param ClientInterface $httpClient
+     * @param RequestFactoryInterface $requestFactory
+     * @param LoggerInterface|null $logger
+     * @return self
+     */
+    public static function create(
+        ClientInterface         $httpClient,
+        RequestFactoryInterface $requestFactory,
+        ?LoggerInterface        $logger = null
+    ): self {
+        return new self($httpClient, $requestFactory, $logger);
     }
 }

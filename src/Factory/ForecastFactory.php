@@ -9,6 +9,7 @@ use function is_array;
 use Orionphp\OpenMeteo\Parser\CurrentParser;
 use Orionphp\OpenMeteo\Parser\DailyParser;
 use Orionphp\OpenMeteo\Parser\HourlyParser;
+use Orionphp\OpenMeteo\Parser\Minutely15Parser;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
 use Orionphp\OpenMeteo\Response\Forecast;
 
@@ -27,6 +28,11 @@ final class ForecastFactory
             ? $data['current_units']
             : null;
 
+        /** @var array<string, mixed>|null $minutely15Units */
+        $minutely15Units = is_array($data['minutely_15_units'] ?? null)
+            ? $data['minutely_15_units']
+            : null;
+
         /** @var array<string, mixed>|null $hourlyUnits */
         $hourlyUnits = is_array($data['hourly_units'] ?? null)
             ? $data['hourly_units']
@@ -40,6 +46,11 @@ final class ForecastFactory
         /** @var array<string, mixed>|null $currentSection */
         $currentSection = is_array($data['current'] ?? null)
             ? $data['current']
+            : null;
+
+        /** @var array<string, mixed>|null $minutely15Section */
+        $minutely15Section = is_array($data['minutely_15'] ?? null)
+            ? $data['minutely_15']
             : null;
 
         /** @var array<string, mixed>|null $hourlySection */
@@ -56,6 +67,11 @@ final class ForecastFactory
             current: CurrentParser::parse(
                 $currentSection,
                 $currentUnits
+            ),
+            minutely15: Minutely15Parser::parse(
+                $minutely15Section,
+                $minutely15Units,
+                $request
             ),
             hourly: HourlyParser::parse(
                 $hourlySection,

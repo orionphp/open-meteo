@@ -51,7 +51,7 @@ final class ForecastQueryBuilder
         return implode(
             ',',
             array_map(
-                static fn(BackedEnum $e) => (string)$e->value,
+                static fn (BackedEnum $e) => (string)$e->value,
                 $enums
             )
         );
