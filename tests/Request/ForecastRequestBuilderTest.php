@@ -67,16 +67,6 @@ final class ForecastRequestBuilderTest extends TestCase
             ->models();
     }
 
-    public function testLocaleCanBeChanged(): void
-    {
-        $request = ForecastRequestBuilder::create(50, 8)
-            ->models(WeatherModel::GFS)
-            ->locale(Locale::DE)
-            ->build();
-
-        $this->assertSame(Locale::DE, $request->locale);
-    }
-
     public function testValidTimezone(): void
     {
         $request = ForecastRequestBuilder::create(50, 8)

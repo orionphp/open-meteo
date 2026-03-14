@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Tests\Factory;
 
-use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Factory\ForecastFactory;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
@@ -126,7 +125,6 @@ final class ForecastFactoryTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::GFS],
-            locale: Locale::EN,
             timezone: null
         );
     }

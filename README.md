@@ -38,30 +38,34 @@ Install via Composer:
 composer require orionphp/open-meteo
 ```
 
-# Basic Usage
+# Basic Usage with Guzzle
 
 ```php
-use Orionphp\OpenMeteo\Client\OpenMeteoClient;
-use Orionphp\OpenMeteo\Request\ForecastRequest;
+use GuzzleHttp\Client;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
+use Orionphp\OpenMeteo\Enum\WeatherModel;
+use Orionphp\OpenMeteo\OpenMeteoClient;
+use Orionphp\OpenMeteo\Request\ForecastRequest;
+use Psr\Log\NullLogger;
 
-$client = new OpenMeteoClient();
+$client = new OpenMeteoClient(new Client(), new Psr17Factory(), new NullLogger());
 
 $request = new ForecastRequest(
-    latitude: 52.52,
-    longitude: 13.41,
+    latitude: 51.341,
+    longitude: 7.288,
+    models: [WeatherModel::BEST_MATCH],
+    timezone: 'Europe/Berlin',
+    current: [
+        CurrentField::TEMPERATURE_2M,
+        CurrentField::RAIN
+    ],
     hourly: [
+        HourlyField::WEATHER_CODE,
         HourlyField::TEMPERATURE_2M
     ]
 );
 
 $forecast = $client->forecast($request);
-
-if ($forecast->hasHourly()) {
-
-    $temperature = $forecast
-        ->hourly
-        ->field(HourlyField::TEMPERATURE_2M)
-        ->values()[0];
-}
 ```

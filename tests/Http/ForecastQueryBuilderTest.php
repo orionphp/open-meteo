@@ -7,7 +7,6 @@ namespace Orionphp\OpenMeteo\Tests\Http;
 use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
-use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Http\ForecastQueryBuilder;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
@@ -21,7 +20,6 @@ final class ForecastQueryBuilderTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::GFS],
-            locale: Locale::EN,
             timezone: null
         );
 
@@ -40,7 +38,6 @@ final class ForecastQueryBuilderTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::GFS],
-            locale: Locale::EN,
             timezone: 'Europe/Berlin'
         );
 
@@ -55,7 +52,6 @@ final class ForecastQueryBuilderTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::ICON_D2],
-            locale: Locale::EN,
             timezone: ''
         );
 
@@ -70,7 +66,6 @@ final class ForecastQueryBuilderTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::ECMWF_IFS],
-            locale: Locale::EN,
             timezone: null,
             current: [CurrentField::TEMPERATURE_2M, CurrentField::WEATHER_CODE],
             hourly: [HourlyField::TEMPERATURE_2M],
@@ -101,7 +96,6 @@ final class ForecastQueryBuilderTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::ECMWF_IFS],
-            locale: Locale::EN,
             timezone: null,
             current: [],
             hourly: [],
@@ -124,7 +118,6 @@ final class ForecastQueryBuilderTest extends TestCase
                 WeatherModel::GFS,
                 WeatherModel::ICON_GLOBAL,
             ],
-            locale: Locale::EN,
             timezone: null
         );
 

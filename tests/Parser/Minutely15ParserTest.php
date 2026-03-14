@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Tests\Parser;
 
-use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\Minutely15Field;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Parser\Minutely15Parser;
@@ -95,7 +94,6 @@ final class Minutely15ParserTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: $models,
-            locale: Locale::EN,
             timezone: null,
             current: null,
             hourly: null,

@@ -10,7 +10,6 @@ use Exception;
 use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
-use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Exception\InvalidCoordinatesException;
 use Orionphp\OpenMeteo\Exception\InvalidTimezoneException;
@@ -26,8 +25,6 @@ final class ForecastRequestBuilder
 
     /** @var list<WeatherModel> */
     private array $models = [];
-
-    private Locale $locale;
 
     private ?string $timezone = null;
 
@@ -59,7 +56,6 @@ final class ForecastRequestBuilder
         }
         $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->locale = Locale::EN;
     }
 
     public static function create(float $latitude, float $longitude): self
@@ -75,12 +71,6 @@ final class ForecastRequestBuilder
 
         $this->models = $this->uniqueEnums(array_values($models));
 
-        return $this;
-    }
-
-    public function locale(Locale $locale): self
-    {
-        $this->locale = $locale;
         return $this;
     }
 
@@ -138,7 +128,6 @@ final class ForecastRequestBuilder
             latitude: $this->latitude,
             longitude: $this->longitude,
             models: $this->models,
-            locale: $this->locale,
             timezone: $this->timezone,
             current: $this->current,
             hourly: $this->hourly,

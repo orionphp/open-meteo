@@ -7,7 +7,6 @@ namespace Orionphp\OpenMeteo\Tests\Request;
 use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
-use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +19,6 @@ final class ForecastRequestTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::GFS],
-            locale: Locale::EN,
             timezone: 'Europe/Berlin',
             current: [CurrentField::TEMPERATURE_2M],
             hourly: [HourlyField::TEMPERATURE_2M],
@@ -30,7 +28,6 @@ final class ForecastRequestTest extends TestCase
         $this->assertSame(50.0, $request->latitude);
         $this->assertSame(8.0, $request->longitude);
         $this->assertSame([WeatherModel::GFS], $request->models);
-        $this->assertSame(Locale::EN, $request->locale);
         $this->assertSame('Europe/Berlin', $request->timezone);
         $this->assertSame([CurrentField::TEMPERATURE_2M], $request->current);
         $this->assertSame([HourlyField::TEMPERATURE_2M], $request->hourly);
@@ -43,7 +40,6 @@ final class ForecastRequestTest extends TestCase
             latitude: 50.0,
             longitude: 8.0,
             models: [WeatherModel::GFS],
-            locale: Locale::EN,
             timezone: null
         );
 

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Tests\Integration;
 
+use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Factory\ForecastFactory;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
-use Orionphp\OpenMeteo\Enum\Locale;
-use Orionphp\OpenMeteo\Enum\WeatherModel;
 use PHPUnit\Framework\TestCase;
 
 final class OpenMeteoRegressionTest extends TestCase
@@ -24,7 +23,6 @@ final class OpenMeteoRegressionTest extends TestCase
             latitude: 50,
             longitude: 8,
             models: [WeatherModel::GFS],
-            locale: Locale::EN,
             timezone: null
         );
 

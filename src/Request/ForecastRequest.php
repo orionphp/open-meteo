@@ -7,7 +7,6 @@ namespace Orionphp\OpenMeteo\Request;
 use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
-use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\Minutely15Field;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 
@@ -31,7 +30,6 @@ final readonly class ForecastRequest
         public float   $latitude,
         public float   $longitude,
         public array   $models,
-        public Locale  $locale,
         public ?string $timezone,
         public ?array  $current = null,
         public ?array  $minutely15 = null,
