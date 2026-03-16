@@ -26,38 +26,17 @@ final class OpenMeteoClient
 {
     private const string BASE_API_URL = 'https://api.open-meteo.com/v1/';
 
-    private readonly ClientInterface $httpClient;
-    private readonly RequestFactoryInterface $requestFactory;
     private readonly LoggerInterface $logger;
 
-    /**
-     * @param ClientInterface|null $httpClient
-     * @param RequestFactoryInterface|null $requestFactory
-     * @param LoggerInterface|null $logger
-     */
     public function __construct(
-        ?ClientInterface         $httpClient = null,
-        ?RequestFactoryInterface $requestFactory = null,
-        ?LoggerInterface         $logger = null
+        private readonly ClientInterface         $httpClient,
+        private readonly RequestFactoryInterface $requestFactory,
+        ?LoggerInterface                         $logger = null
     ) {
-
-        $this->httpClient = $httpClient
-            ?? throw new OpenMeteoException(
-                'No PSR-18 HTTP client provided. Install one (e.g. guzzlehttp/guzzle).'
-            );
-
-        $this->requestFactory = $requestFactory
-            ?? throw new OpenMeteoException(
-                'No PSR-17 request factory provided. Install one (e.g. nyholm/psr7).'
-            );
 
         $this->logger = $logger ?? new NullLogger();
     }
 
-    /**
-     * @param ForecastRequest $request
-     * @return Forecast
-     */
     public function forecast(ForecastRequest $request): Forecast
     {
         $query = ForecastQueryBuilder::build($request);
@@ -70,9 +49,7 @@ final class OpenMeteoClient
     }
 
     /**
-     * @param string $endpoint
      * @param array<string, scalar|string[]> $query
-     * @return ResponseInterface
      */
     private function sendRequest(string $endpoint, array $query): ResponseInterface
     {
@@ -118,9 +95,7 @@ final class OpenMeteoClient
     }
 
     /**
-     * @param string $endpoint
      * @param array<string, scalar|string[]> $query
-     * @return string
      */
     private function buildUrl(string $endpoint, array $query): string
     {
@@ -136,7 +111,6 @@ final class OpenMeteoClient
     }
 
     /**
-     * @param ResponseInterface $response
      * @return array<string, mixed>
      */
     private function decodeJson(ResponseInterface $response): array
@@ -168,17 +142,4 @@ final class OpenMeteoClient
         return $data;
     }
 
-    /**
-     * @param ClientInterface $httpClient
-     * @param RequestFactoryInterface $requestFactory
-     * @param LoggerInterface|null $logger
-     * @return self
-     */
-    public static function create(
-        ClientInterface         $httpClient,
-        RequestFactoryInterface $requestFactory,
-        ?LoggerInterface        $logger = null
-    ): self {
-        return new self($httpClient, $requestFactory, $logger);
-    }
 }

@@ -16,10 +16,6 @@ enum Locale: string
     case ES = 'es';
     case FR = 'fr';
 
-    /**
-     * @param string $locale
-     * @return self
-     */
     public static function fromString(string $locale): self
     {
         $normalized = strtolower(substr($locale, 0, 2));

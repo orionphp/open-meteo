@@ -64,12 +64,12 @@ final class BackedEnumValuesTraitTest extends TestCase
         $cases = StringBackedTestEnum::cases();
 
         $valuesFromCases = array_map(
-            static fn($case) => $case->value,
+            static fn ($case) => $case->value,
             $cases
         );
 
         $namesFromCases = array_map(
-            static fn($case) => $case->name,
+            static fn ($case) => $case->name,
             $cases
         );
 

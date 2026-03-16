@@ -20,7 +20,7 @@ final class WeatherModelTest extends TestCase
     {
         $this->assertSame(
             array_map(
-                static fn(WeatherModel $case) => $case->value,
+                static fn (WeatherModel $case) => $case->value,
                 WeatherModel::cases()
             ),
             WeatherModel::values()
@@ -31,7 +31,7 @@ final class WeatherModelTest extends TestCase
     {
         $this->assertSame(
             array_map(
-                static fn(WeatherModel $case) => $case->name,
+                static fn (WeatherModel $case) => $case->name,
                 WeatherModel::cases()
             ),
             WeatherModel::names()
@@ -44,10 +44,13 @@ final class WeatherModelTest extends TestCase
         $this->assertSame($expected, WeatherModel::fromString($value));
     }
 
+    /**
+     * @return array<int, array{string, WeatherModel}>
+     */
     public static function validModelProvider(): array
     {
         return array_map(
-            static fn(WeatherModel $case) => [$case->value, $case],
+            static fn (WeatherModel $case) => [$case->value, $case],
             WeatherModel::cases()
         );
     }
@@ -68,6 +71,9 @@ final class WeatherModelTest extends TestCase
         $this->assertFalse($model->isUnitedStates());
     }
 
+    /**
+     * @return array<int, array{WeatherModel}>
+     */
     public static function globalProvider(): array
     {
         return [
@@ -88,6 +94,9 @@ final class WeatherModelTest extends TestCase
         $this->assertFalse($model->isUnitedStates());
     }
 
+    /**
+     * @return array<int, array{WeatherModel}>
+     */
     public static function europeProvider(): array
     {
         return [
@@ -108,6 +117,9 @@ final class WeatherModelTest extends TestCase
         $this->assertFalse($model->isEuropean());
     }
 
+    /**
+     * @return array<int, array{WeatherModel}>
+     */
     public static function usProvider(): array
     {
         return [
@@ -138,7 +150,7 @@ final class WeatherModelTest extends TestCase
 
     public function testRecommendedForReturnsModels(): void
     {
-        $models = WeatherModel::recommendedFor(52.52, 13.41); // Berlin
+        $models = WeatherModel::recommendedFor(52.52, 13.41);
 
         $this->assertNotEmpty($models);
         $this->assertContains(WeatherModel::ECMWF_IFS, $models);

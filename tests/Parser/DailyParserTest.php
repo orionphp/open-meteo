@@ -85,9 +85,13 @@ final class DailyParserTest extends TestCase
 
         $result = DailyParser::parse($section, null, $request);
 
+        $this->assertInstanceOf(DailyData::class, $result);
         $this->assertSame([], $result->availableFields());
     }
 
+    /**
+     * @param list<WeatherModel> $models
+     */
     private function createRequest(array $models): ForecastRequest
     {
         return new ForecastRequest(

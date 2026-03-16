@@ -82,7 +82,7 @@ final class DailyFieldTest extends TestCase
 
     public function testTryFromReturnsNullForInvalidValue(): void
     {
-        $this->assertNull(DailyField::tryFrom('invalid_field'));
+        $this->assertSame(null, DailyField::tryFrom('invalid_field'));
     }
 
     public function testFromThrowsExceptionForInvalidValue(): void
@@ -111,12 +111,12 @@ final class DailyFieldTest extends TestCase
         $cases = DailyField::cases();
 
         $valuesFromCases = array_map(
-            static fn(DailyField $case) => $case->value,
+            static fn (DailyField $case) => $case->value,
             $cases
         );
 
         $namesFromCases = array_map(
-            static fn(DailyField $case) => $case->name,
+            static fn (DailyField $case) => $case->name,
             $cases
         );
 

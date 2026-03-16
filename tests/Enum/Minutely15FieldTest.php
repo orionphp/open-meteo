@@ -91,7 +91,7 @@ final class Minutely15FieldTest extends TestCase
 
     public function testTryFromReturnsNullForInvalidValue(): void
     {
-        $this->assertNull(Minutely15Field::tryFrom('invalid_field'));
+        $this->assertSame(null, Minutely15Field::tryFrom('invalid_field'));
     }
 
     public function testFromThrowsExceptionForInvalidValue(): void

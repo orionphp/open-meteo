@@ -85,9 +85,13 @@ final class HourlyParserTest extends TestCase
 
         $result = HourlyParser::parse($section, null, $request);
 
+        $this->assertInstanceOf(HourlyData::class, $result);
         $this->assertSame([], $result->availableFields());
     }
 
+    /**
+     * @param list<WeatherModel> $models
+     */
     private function createRequest(array $models): ForecastRequest
     {
         return new ForecastRequest(

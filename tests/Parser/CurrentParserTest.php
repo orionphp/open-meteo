@@ -35,12 +35,14 @@ final class CurrentParserTest extends TestCase
         $this->assertSame('2025-01-01T00:00', $result->time());
 
         $temperature = $result->field(CurrentField::TEMPERATURE_2M);
+
         $this->assertNotNull($temperature);
         $this->assertSame(CurrentField::TEMPERATURE_2M, $temperature->field());
         $this->assertSame(12.5, $temperature->value());
         $this->assertSame('°C', $temperature->unit());
 
         $weather = $result->field(CurrentField::WEATHER_CODE);
+
         $this->assertNotNull($weather);
         $this->assertSame(0, $weather->value());
         $this->assertSame('wmo', $weather->unit());
@@ -55,6 +57,7 @@ final class CurrentParserTest extends TestCase
 
         $result = CurrentParser::parse($section, null);
 
+        $this->assertInstanceOf(CurrentData::class, $result);
         $this->assertSame([], $result->availableFields());
     }
 
@@ -66,6 +69,8 @@ final class CurrentParserTest extends TestCase
         ];
 
         $result = CurrentParser::parse($section, null);
+
+        $this->assertInstanceOf(CurrentData::class, $result);
 
         $this->assertNull(
             $result->field(CurrentField::TEMPERATURE_2M)
@@ -80,6 +85,8 @@ final class CurrentParserTest extends TestCase
         ];
 
         $result = CurrentParser::parse($section, null);
+
+        $this->assertInstanceOf(CurrentData::class, $result);
 
         $field = $result->field(CurrentField::TEMPERATURE_2M);
 
@@ -96,9 +103,12 @@ final class CurrentParserTest extends TestCase
 
         $result = CurrentParser::parse($section, null);
 
-        $this->assertNull(
-            $result->field(CurrentField::TEMPERATURE_2M)?->unit()
-        );
+        $this->assertInstanceOf(CurrentData::class, $result);
+
+        $field = $result->field(CurrentField::TEMPERATURE_2M);
+
+        $this->assertNotNull($field);
+        $this->assertNull($field->unit());
     }
 
     public function testUnitIsIgnoredIfNotString(): void
@@ -114,9 +124,12 @@ final class CurrentParserTest extends TestCase
 
         $result = CurrentParser::parse($section, $units);
 
-        $this->assertNull(
-            $result->field(CurrentField::TEMPERATURE_2M)?->unit()
-        );
+        $this->assertInstanceOf(CurrentData::class, $result);
+
+        $field = $result->field(CurrentField::TEMPERATURE_2M);
+
+        $this->assertNotNull($field);
+        $this->assertNull($field->unit());
     }
 
     public function testUnitIsSetIfValidString(): void
@@ -132,9 +145,11 @@ final class CurrentParserTest extends TestCase
 
         $result = CurrentParser::parse($section, $units);
 
-        $this->assertSame(
-            '°C',
-            $result->field(CurrentField::TEMPERATURE_2M)?->unit()
-        );
+        $this->assertInstanceOf(CurrentData::class, $result);
+
+        $field = $result->field(CurrentField::TEMPERATURE_2M);
+
+        $this->assertNotNull($field);
+        $this->assertSame('°C', $field->unit());
     }
 }

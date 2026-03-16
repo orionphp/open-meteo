@@ -32,6 +32,10 @@ final class ForecastQueryBuilder
             $query['current'] = self::implodeEnums($request->current);
         }
 
+        if ($request->minutely15 !== null && $request->minutely15 !== []) {
+            $query['minutely_15'] = self::implodeEnums($request->minutely15);
+        }
+
         if ($request->hourly !== null && $request->hourly !== []) {
             $query['hourly'] = self::implodeEnums($request->hourly);
         }

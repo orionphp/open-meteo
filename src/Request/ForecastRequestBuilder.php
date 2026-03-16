@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Request;
 
+use function array_values;
+
 use BackedEnum;
 use DateTimeZone;
 use Exception;
 use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
+use Orionphp\OpenMeteo\Enum\Minutely15Field;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Exception\InvalidCoordinatesException;
 use Orionphp\OpenMeteo\Exception\InvalidTimezoneException;
 use Orionphp\OpenMeteo\Exception\OpenMeteoException;
+
+use function sprintf;
 
 /**
  * Builder for creating ForecastRequest objects.
@@ -31,16 +36,15 @@ final class ForecastRequestBuilder
     /** @var list<CurrentField>|null */
     private ?array $current = null;
 
+    /** @var list<Minutely15Field>|null */
+    private ?array $minutely15 = null;
+
     /** @var list<HourlyField>|null */
     private ?array $hourly = null;
 
     /** @var list<DailyField>|null */
     private ?array $daily = null;
 
-    /**
-     * @param float $latitude
-     * @param float $longitude
-     */
     private function __construct(float $latitude, float $longitude)
     {
         if ($latitude < -90.0 || $latitude > 90.0) {
@@ -54,6 +58,7 @@ final class ForecastRequestBuilder
                 sprintf('Longitude must be between -180 and 180. "%s" given.', $longitude)
             );
         }
+
         $this->latitude = $latitude;
         $this->longitude = $longitude;
     }
@@ -81,7 +86,9 @@ final class ForecastRequestBuilder
         } catch (Exception $e) {
             throw new InvalidTimezoneException($e->getMessage());
         }
+
         $this->timezone = $timezone;
+
         return $this;
     }
 
@@ -92,6 +99,17 @@ final class ForecastRequestBuilder
         }
 
         $this->current = $this->uniqueEnums(array_values($fields));
+
+        return $this;
+    }
+
+    public function minutely15(Minutely15Field ...$fields): self
+    {
+        if ($fields === []) {
+            throw new OpenMeteoException('Minutely15 fields cannot be empty.');
+        }
+
+        $this->minutely15 = $this->uniqueEnums(array_values($fields));
 
         return $this;
     }
@@ -130,6 +148,7 @@ final class ForecastRequestBuilder
             models: $this->models,
             timezone: $this->timezone,
             current: $this->current,
+            minutely15: $this->minutely15,
             hourly: $this->hourly,
             daily: $this->daily,
         );

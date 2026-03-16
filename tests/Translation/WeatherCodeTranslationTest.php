@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Tests\Translation;
 
+use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\WeatherCode;
 use Orionphp\OpenMeteo\Exception\MissingWeatherCodeTranslation;
 use Orionphp\OpenMeteo\Exception\OpenMeteoException;
@@ -20,7 +23,7 @@ final class WeatherCodeTranslationTest extends TestCase
 
     protected function tearDown(): void
     {
-        foreach (glob($this->tmpDir . '/*.php') as $file) {
+        foreach (glob($this->tmpDir . '/*.php') ?: [] as $file) {
             unlink($file);
         }
 
@@ -36,7 +39,7 @@ final class WeatherCodeTranslationTest extends TestCase
 
         $translator = new WeatherCodeTranslation($this->tmpDir);
 
-        $result = $translator->translate(WeatherCode::ClearSky, 'en');
+        $result = $translator->translate(WeatherCode::ClearSky, Locale::EN);
 
         $this->assertSame('Clear sky', $result);
     }
@@ -50,7 +53,7 @@ final class WeatherCodeTranslationTest extends TestCase
 
         $translator = new WeatherCodeTranslation($this->tmpDir);
 
-        $result = $translator->translate(WeatherCode::ClearSky, 'en');
+        $result = $translator->translate(WeatherCode::ClearSky, Locale::EN);
 
         $this->assertNull($result);
     }
@@ -61,7 +64,7 @@ final class WeatherCodeTranslationTest extends TestCase
 
         $this->expectException(MissingWeatherCodeTranslation::class);
 
-        $translator->translate(WeatherCode::ClearSky, 'xx');
+        $translator->translate(WeatherCode::ClearSky, Locale::EN);
     }
 
     public function testInvalidTranslationFileThrowsException(): void
@@ -75,7 +78,7 @@ final class WeatherCodeTranslationTest extends TestCase
 
         $this->expectException(OpenMeteoException::class);
 
-        $translator->translate(WeatherCode::ClearSky, 'en');
+        $translator->translate(WeatherCode::ClearSky, Locale::EN);
     }
 
     public function testCacheIsUsed(): void
@@ -89,13 +92,13 @@ final class WeatherCodeTranslationTest extends TestCase
 
         $this->assertSame(
             'Clear sky',
-            $translator->translate(WeatherCode::ClearSky, 'en')
+            $translator->translate(WeatherCode::ClearSky, Locale::EN)
         );
 
         // zweite Abfrage nutzt Cache-Zweig
         $this->assertSame(
             'Clear sky',
-            $translator->translate(WeatherCode::ClearSky, 'en')
+            $translator->translate(WeatherCode::ClearSky, Locale::EN)
         );
     }
 }

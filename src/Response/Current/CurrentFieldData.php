@@ -8,11 +8,6 @@ use Orionphp\OpenMeteo\Enum\CurrentField;
 
 final readonly class CurrentFieldData
 {
-    /**
-     * @param CurrentField $field
-     * @param string|null $unit
-     * @param float|int|string|null $value
-     */
     public function __construct(
         private CurrentField          $field,
         private ?string               $unit,

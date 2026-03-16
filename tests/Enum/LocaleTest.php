@@ -42,7 +42,7 @@ final class LocaleTest extends TestCase
 
     public function testTryFromReturnsNullForInvalidValue(): void
     {
-        $this->assertNull(Locale::tryFrom('xx'));
+        $this->assertSame(null, Locale::tryFrom('xx'));
     }
 
     public function testFromThrowsExceptionForInvalidValue(): void
@@ -60,6 +60,9 @@ final class LocaleTest extends TestCase
         $this->assertSame($expected, Locale::fromString($input));
     }
 
+    /**
+     * @return array<int|string, array{string, Locale}>
+     */
     public static function fromStringProvider(): array
     {
         return [

@@ -37,6 +37,9 @@ final class WeatherCodeTest extends TestCase
         );
     }
 
+    /**
+     * @return array<int|string, array{int}>
+     */
     public static function undefinedPrecipitationProvider(): array
     {
         return [
@@ -55,6 +58,9 @@ final class WeatherCodeTest extends TestCase
         );
     }
 
+    /**
+     * @return array<int|string, array{int}>
+     */
     public static function undefinedDrizzleProvider(): array
     {
         return [
@@ -72,6 +78,9 @@ final class WeatherCodeTest extends TestCase
         );
     }
 
+    /**
+     * @return array<int|string, array{int}>
+     */
     public static function undefinedRainProvider(): array
     {
         return [
@@ -89,6 +98,9 @@ final class WeatherCodeTest extends TestCase
         );
     }
 
+    /**
+     * @return array<int|string, array{int}>
+     */
     public static function undefinedSnowProvider(): array
     {
         return [
@@ -107,6 +119,9 @@ final class WeatherCodeTest extends TestCase
         );
     }
 
+    /**
+     * @return array<int|string, array{int}>
+     */
     public static function undefinedThunderstormProvider(): array
     {
         return [
@@ -144,7 +159,7 @@ final class WeatherCodeTest extends TestCase
     public function testEnumCasesContainNoDuplicateValues(): void
     {
         $values = array_map(
-            static fn(WeatherCode $case) => $case->value,
+            static fn (WeatherCode $case) => $case->value,
             WeatherCode::cases()
         );
 

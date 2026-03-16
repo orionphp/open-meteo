@@ -7,6 +7,7 @@ namespace Orionphp\OpenMeteo\Tests\Http;
 use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
+use Orionphp\OpenMeteo\Enum\Minutely15Field;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Http\ForecastQueryBuilder;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
@@ -90,6 +91,27 @@ final class ForecastQueryBuilderTest extends TestCase
         );
     }
 
+    public function testMinutely15FieldsAreImploded(): void
+    {
+        $request = new ForecastRequest(
+            latitude: 50.0,
+            longitude: 8.0,
+            models: [WeatherModel::ECMWF_IFS],
+            timezone: null,
+            minutely15: [
+                Minutely15Field::TEMPERATURE_2M,
+                Minutely15Field::WEATHER_CODE,
+            ]
+        );
+
+        $query = ForecastQueryBuilder::build($request);
+
+        $this->assertSame(
+            'temperature_2m,weathercode',
+            $query['minutely_15']
+        );
+    }
+
     public function testEmptyFieldArraysAreIgnored(): void
     {
         $request = new ForecastRequest(
@@ -98,6 +120,7 @@ final class ForecastQueryBuilderTest extends TestCase
             models: [WeatherModel::ECMWF_IFS],
             timezone: null,
             current: [],
+            minutely15: [],
             hourly: [],
             daily: []
         );
@@ -105,6 +128,7 @@ final class ForecastQueryBuilderTest extends TestCase
         $query = ForecastQueryBuilder::build($request);
 
         $this->assertArrayNotHasKey('current', $query);
+        $this->assertArrayNotHasKey('minutely_15', $query);
         $this->assertArrayNotHasKey('hourly', $query);
         $this->assertArrayNotHasKey('daily', $query);
     }

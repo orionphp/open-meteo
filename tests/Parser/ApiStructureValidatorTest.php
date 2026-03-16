@@ -20,7 +20,7 @@ final class ApiStructureValidatorTest extends TestCase
 
         ApiStructureValidator::validateTimeSeries($section);
 
-        $this->assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testValidateTimeSeriesThrowsIfTimeMissing(): void
@@ -96,7 +96,7 @@ final class ApiStructureValidatorTest extends TestCase
 
         ApiStructureValidator::validateSingleTime($section);
 
-        $this->assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testValidateSingleTimeAcceptsMissingTime(): void
@@ -107,7 +107,7 @@ final class ApiStructureValidatorTest extends TestCase
 
         ApiStructureValidator::validateSingleTime($section);
 
-        $this->assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testValidateSingleTimeThrowsIfTimeNotString(): void

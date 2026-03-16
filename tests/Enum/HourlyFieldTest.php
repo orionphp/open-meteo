@@ -127,7 +127,7 @@ final class HourlyFieldTest extends TestCase
 
     public function testTryFromReturnsNullForInvalidValue(): void
     {
-        $this->assertNull(HourlyField::tryFrom('invalid_field'));
+        $this->assertSame(null, HourlyField::tryFrom('invalid_field'));
     }
 
     public function testFromThrowsExceptionForInvalidValue(): void
@@ -156,12 +156,12 @@ final class HourlyFieldTest extends TestCase
         $cases = HourlyField::cases();
 
         $valuesFromCases = array_map(
-            static fn(HourlyField $case) => $case->value,
+            static fn (HourlyField $case) => $case->value,
             $cases
         );
 
         $namesFromCases = array_map(
-            static fn(HourlyField $case) => $case->name,
+            static fn (HourlyField $case) => $case->name,
             $cases
         );
 

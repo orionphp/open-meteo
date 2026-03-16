@@ -46,17 +46,13 @@ enum WeatherCode: int
     case ThunderstormHailHeavy = 99;
 
     //Not used by Open Meteo / undefined values
-    case UndefinedPrecipitation = -10; // 4–44
+    case UndefinedPrecipitation = -10; // 4-44
     case UndefinedDrizzle = -11;       // 52,54
     case UndefinedRain = -12;          // 62,64
     case UndefinedSnow = -13;          // 72,74,76
-    case UndefinedThunderstorm = -14;  // 97–98
+    case UndefinedThunderstorm = -14;  // 97-98
     case Undefined = -1;               // Others
 
-    /**
-     * @param int $code
-     * @return self
-     */
     public static function fromInt(int $code): self
     {
         $tryFromResult = self::tryFrom($code);
@@ -78,9 +74,6 @@ enum WeatherCode: int
         };
     }
 
-    /**
-     * @return bool
-     */
     public function isDefined(): bool
     {
         return $this->value >= 0;

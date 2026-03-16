@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Tests\Example;
 
+use Orionphp\OpenMeteo\Enum\CurrentField;
+use Orionphp\OpenMeteo\Enum\DailyField;
+use Orionphp\OpenMeteo\Enum\HourlyField;
+use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Factory\ForecastFactory;
 use Orionphp\OpenMeteo\Request\ForecastRequestBuilder;
-use Orionphp\OpenMeteo\Enum\WeatherModel;
-use Orionphp\OpenMeteo\Enum\CurrentField;
-use Orionphp\OpenMeteo\Enum\HourlyField;
-use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Response\Forecast;
 use PHPUnit\Framework\TestCase;
 

@@ -83,7 +83,7 @@ final class CurrentFieldTest extends TestCase
 
     public function testTryFromReturnsNullForInvalidValue(): void
     {
-        $this->assertNull(CurrentField::tryFrom('invalid_field'));
+        $this->assertSame(null, CurrentField::tryFrom('invalid_field'));
     }
 
     public function testFromThrowsExceptionForInvalidValue(): void
@@ -112,12 +112,12 @@ final class CurrentFieldTest extends TestCase
         $cases = CurrentField::cases();
 
         $valuesFromCases = array_map(
-            static fn(CurrentField $case) => $case->value,
+            static fn (CurrentField $case) => $case->value,
             $cases
         );
 
         $namesFromCases = array_map(
-            static fn(CurrentField $case) => $case->name,
+            static fn (CurrentField $case) => $case->name,
             $cases
         );
 

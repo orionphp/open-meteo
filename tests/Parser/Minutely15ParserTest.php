@@ -85,9 +85,15 @@ final class Minutely15ParserTest extends TestCase
 
         $result = Minutely15Parser::parse($section, null, $request);
 
+        $this->assertInstanceOf(Minutely15Data::class, $result);
+        $this->assertSame([], $result->availableFields());
+
         $this->assertSame([], $result->availableFields());
     }
 
+    /**
+     * @param list<WeatherModel> $models
+     */
     private function createRequest(array $models): ForecastRequest
     {
         return new ForecastRequest(

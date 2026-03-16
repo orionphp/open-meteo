@@ -1,5 +1,22 @@
 # Orionphp Open-Meteo Client
 
+[![CI](https://github.com/ORGANIZATION/REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/ORGANIZATION/REPO/actions)
+
+[![Latest Stable Version](https://poser.pugx.org/orionphp/open-meteo/v)](https://packagist.org/packages/orionphp/open-meteo)
+
+[![Total Downloads](https://poser.pugx.org/orionphp/open-meteo/downloads)](https://packagist.org/packages/orionphp/open-meteo)
+
+[![PHP Version Require](https://poser.pugx.org/orionphp/open-meteo/require/php)](https://packagist.org/packages/orionphp/open-meteo)
+
+[![License](https://poser.pugx.org/orionphp/open-meteo/license)](https://packagist.org/packages/orionphp/open-meteo)
+
+[![Code Style](https://img.shields.io/badge/code%20style-php--cs--fixer-brightgreen)](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)
+
+![PHPStan](https://img.shields.io/badge/PHPStan-level%20max-brightgreen)
+
+[![Coverage](https://codecov.io/gh/orionphp/open-meteo/branch/main/graph/badge.svg)](https://codecov.io)
+
+
 A lightweight PHP client for the free weather API from
 [Open-Meteo](https://open-meteo.com/).
 
@@ -38,7 +55,31 @@ Install via Composer:
 composer require orionphp/open-meteo
 ```
 
-# Basic Usage with Guzzle
+---
+
+
+# Requirements
+
+- PHP **8.4+**
+- Composer
+- PSR-18 HTTP client
+- PSR-17 request factory
+- PSR-7 HTTP message implementation
+
+Optional:
+
+- PSR-3 logger
+
+If you don't already have these installed, a common setup is:
+
+```bash
+composer require guzzlehttp/guzzle nyholm/psr7
+```
+
+---
+
+# Basic Usage with Guzzle and Nyholm\Psr7
+(replace them with your preferred HTTP client and PSR-7 implementation)
 
 ```php
 use GuzzleHttp\Client;

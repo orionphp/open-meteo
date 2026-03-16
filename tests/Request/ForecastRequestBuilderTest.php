@@ -7,7 +7,6 @@ namespace Orionphp\OpenMeteo\Tests\Request;
 use Orionphp\OpenMeteo\Enum\CurrentField;
 use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
-use Orionphp\OpenMeteo\Enum\Locale;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Exception\InvalidCoordinatesException;
 use Orionphp\OpenMeteo\Exception\InvalidTimezoneException;

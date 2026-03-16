@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Orionphp\OpenMeteo\Tests\Integration;
 
+use JsonException;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
 use Orionphp\OpenMeteo\Factory\ForecastFactory;
 use Orionphp\OpenMeteo\Request\ForecastRequest;
@@ -11,13 +12,20 @@ use PHPUnit\Framework\TestCase;
 
 final class OpenMeteoRegressionTest extends TestCase
 {
+    /**
+     * @throws JsonException
+     */
     public function testRealApiResponseStillParses(): void
     {
         $json = file_get_contents(
             __DIR__ . '/../Fixtures/openmeteo-response.json'
         );
 
-        $data = json_decode($json, true);
+        self::assertIsString($json);
+
+        $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
+        /** @var array<string, mixed> $data */
 
         $request = new ForecastRequest(
             latitude: 50,

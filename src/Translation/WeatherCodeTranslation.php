@@ -7,6 +7,8 @@ namespace Orionphp\OpenMeteo\Translation;
 use function is_array;
 use function is_file;
 
+use Orionphp\OpenMeteo\Enum\Locale;
+
 use Orionphp\OpenMeteo\Enum\WeatherCode;
 use Orionphp\OpenMeteo\Exception\MissingWeatherCodeTranslation;
 use Orionphp\OpenMeteo\Exception\OpenMeteoException;
@@ -26,7 +28,7 @@ final class WeatherCodeTranslation
         $this->path = rtrim($path ?? __DIR__ . '/locales', '/');
     }
 
-    public function translate(WeatherCode $code, string $locale): ?string
+    public function translate(WeatherCode $code, Locale $locale): ?string
     {
         $translations = $this->load($locale);
 
@@ -34,20 +36,19 @@ final class WeatherCodeTranslation
     }
 
     /**
-     * @param string $locale
      * @return array<int,string>
      */
-    private function load(string $locale): array
+    private function load(Locale $locale): array
     {
-        if (isset($this->cache[$locale])) {
-            return $this->cache[$locale];
+        if (isset($this->cache[$locale->value])) {
+            return $this->cache[$locale->value];
         }
 
-        $file = $this->path . '/' . $locale . '.php';
+        $file = $this->path . '/' . $locale->value . '.php';
 
         if (!is_file($file)) {
             throw new MissingWeatherCodeTranslation(
-                sprintf('Translation file not found for locale "%s" in path "%s".', $locale, $this->path)
+                sprintf('Translation file not found for locale "%s" in path "%s".', $locale->value, $this->path)
             );
         }
 
@@ -60,7 +61,7 @@ final class WeatherCodeTranslation
         }
 
         /** @var array<int,string> $translations */
-        $this->cache[$locale] = $translations;
+        $this->cache[$locale->value] = $translations;
 
         return $translations;
     }
