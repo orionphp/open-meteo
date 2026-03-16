@@ -2,11 +2,28 @@
 <phpunit
         bootstrap="vendor/autoload.php"
         colors="true"
+        cacheDirectory=".phpunit.cache"
         beStrictAboutTestsThatDoNotTestAnything="true"
+        failOnRisky="true"
+        failOnWarning="true"
 >
     <testsuites>
-        <testsuite name="OpenMeteo">
-            <directory>tests</directory>
+        <testsuite name="unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        <testsuite name="contract">
+            <directory>tests/Contract</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+    <php>
+        <env name="OPEN_METEO_INTEGRATION_TESTS" value="0"/>
+    </php>
 </phpunit>
