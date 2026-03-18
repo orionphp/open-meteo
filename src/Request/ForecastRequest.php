@@ -31,7 +31,6 @@ final readonly class ForecastRequest
         public ?array  $minutely15 = null,
         public ?array  $hourly = null,
         public ?array  $daily = null
-    )
-    {
+    ) {
     }
 }

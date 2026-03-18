@@ -5,7 +5,7 @@
         cacheDirectory=".phpunit.cache"
         beStrictAboutTestsThatDoNotTestAnything="true"
         failOnRisky="true"
-        failOnWarning="false"
+        failOnWarning="true"
 >
     <testsuites>
         <testsuite name="unit">
@@ -25,7 +25,15 @@
         </include>
     </source>
 
+    <coverage>
+        <report>
+            <clover outputFile="coverage/clover.xml"/>
+            <html outputDirectory="coverage/html"/>
+            <text outputFile="php://stdout" showUncoveredFiles="false"/>
+        </report>
+    </coverage>
+
     <php>
-        <env name="OPEN_METEO_INTEGRATION_TESTS" value="0"/>
+        <env name="OPEN_METEO_INTEGRATION_TESTS" value="1"/>
     </php>
 </phpunit>
