@@ -9,9 +9,6 @@ use Orionphp\OpenMeteo\Enum\DailyField;
 use Orionphp\OpenMeteo\Enum\HourlyField;
 use Orionphp\OpenMeteo\Enum\Minutely15Field;
 use Orionphp\OpenMeteo\Enum\WeatherModel;
-use Orionphp\OpenMeteo\Exception\InvalidCoordinatesException;
-
-use function sprintf;
 
 /**
  * Represents a request for weather forecasting data based on geographic coordinates, models, and fields.
@@ -34,17 +31,7 @@ final readonly class ForecastRequest
         public ?array  $minutely15 = null,
         public ?array  $hourly = null,
         public ?array  $daily = null
-    ) {
-        if ($latitude < -90.0 || $latitude > 90.0) {
-            throw new InvalidCoordinatesException(
-                sprintf('Latitude must be between -90 and 90. "%s" given.', $latitude)
-            );
-        }
-
-        if ($longitude < -180.0 || $longitude > 180.0) {
-            throw new InvalidCoordinatesException(
-                sprintf('Longitude must be between -180 and 180. "%s" given.', $longitude)
-            );
-        }
+    )
+    {
     }
 }
