@@ -1,8 +1,8 @@
 # Orionphp Open-Meteo Client
 
-[![CI](https://github.com/orionphp/open-meteo/actions/workflows/ci.yml/badge.svg)](https://github.com/orionphp/open-meteo/actions)
-[![Latest Stable Version](https://poser.pugx.org/orionphp/open-meteo/v/stable)](https://packagist.org/packages/orionphp/open-meteo)
-[![PHP Version Require](https://poser.pugx.org/orionphp/open-meteo/require/php)](https://packagist.org/packages/orionphp/open-meteo)
+[![CI](...)](...)
+[![Latest Stable Version](https://poser.pugx.org/dle79/open-meteo/v/stable)](https://packagist.org/packages/dle79/open-meteo)
+[![PHP Version Require](https://poser.pugx.org/dle79/open-meteo/require/php)](https://packagist.org/packages/dle79/open-meteo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A typed PHP 8.4 client for the [Open-Meteo](https://open-meteo.com/) weather API — free, no API key required.
