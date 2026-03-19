@@ -1,5 +1,5 @@
 {
-    "name": "orionphp/open-meteo",
+    "name": "dle79/open-meteo",
     "description": "Typed PHP 8.4 client for the Open-Meteo API",
     "authors": [
         {
